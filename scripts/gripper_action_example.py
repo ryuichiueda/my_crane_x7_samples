@@ -1,19 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# このサンプルは実機動作のみに対応しています
-# fake_execution:=trueにすると、GripperCommandActionのサーバが立ち上がりません
+# RTさんのコードに上田がコメントを入れたものです
+# Copyrights: RT-Corporation, 上田
 
-import sys
-import rospy
-import time
-import actionlib
-import math
+import sys, rospy, time, actionlib, math
 from std_msgs.msg import Float64
-from control_msgs.msg import (
-    GripperCommandAction,
-    GripperCommandGoal
-)
+from control_msgs.msg import GripperCommandAction, GripperCommandGoal
 
 class GripperClient(object):
     def __init__(self):
