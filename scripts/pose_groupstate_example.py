@@ -1,23 +1,18 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import rospy
-import moveit_commander
-import geometry_msgs.msg
-import rosnode
+import rospy, moveit_commander, geometry_msgs.msg, rosnode
 from tf.transformations import quaternion_from_euler
-
 
 def main():
     rospy.init_node("pose_groupstate_example")
-    robot = moveit_commander.RobotCommander()
-    arm = moveit_commander.MoveGroupCommander("arm")
-    arm.set_max_velocity_scaling_factor(0.1)
-    gripper = moveit_commander.MoveGroupCommander("gripper")
+    robot = moveit_commander.RobotCommander()                #MoveIt!に指令を送るコマンド
+    arm = moveit_commander.MoveGroupCommander("arm")         #armグループを操作するためのオブジェクトを生成
+    arm.set_max_velocity_scaling_factor(0.1)                 #速度を1/10におさえる
+    gripper = moveit_commander.MoveGroupCommander("gripper") #gripperグループを操作するためのオブジェクト生成
 
-    while len([s for s in rosnode.get_node_names() if 'rviz' in s]) == 0:
-        rospy.sleep(1.0)
-    rospy.sleep(1.0)
+    while not 'rviz' in ','.join(rosnode.get_node_names()):  #rvizが立ち上がるのを待つ
+        rospy.sleep(0.1)
 
     print("Group names:")
     print(robot.get_group_names())
@@ -71,6 +66,7 @@ def main():
 
 
 if __name__ == '__main__':
+    ### この例外処理は・・・たぶんあまり意味がない（mainを呼び出すだけで十分） ###
     try:
         if not rospy.is_shutdown():
             main()
